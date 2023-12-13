@@ -1,13 +1,28 @@
-import http from "http"
+import express from 'express';
 
-const server = http.createServer((req, res) => {
-    res.end("hello this is my first server!!!!")
-}
-)
+const app = express();
 
-const port = 3001
-const host = "127.0.0.1"
+app.get("/about",(req, res) => {
+    res.send("hello world");
+})
 
-server.listen(3001, "127.0.0.1", ()=>{
-    console.log(`Server connection to port:${port} and host:${host} established`);
+app.get("/contact/:name/:age/:origin", (req, res) => {
+
+    console.log(req.params)
+    const name = req.params.name;
+    const age = parseInt(req.params.age);
+    const origin = req.params.origin;
+
+    res.json({
+        name,
+        age,
+        origin
+    
+    })
+    
+    res.send(`This page is the contact page for ${name}, he is ${age} years old he is from ${origin} state`);
+})
+
+app.listen(3001,()=>{
+    console.log("connected to serverrrr");
 })
